@@ -4,19 +4,13 @@
 //import java.util.Objects;
 //
 //public class CheckIfFile {
-//    public static void check{
+//    public static void check(){
+//
 //        while (!value.isFile()) {
 //            File[] bamboo = listaplikow;
 //            file = new File(value.toString());
 //
 //            if (Objects.requireNonNull(file.listFiles()).length == 0) {
-//                jobdone = jobdone / listaplikow.length;
-//
-//                for (int l = 0; l < listaplikow.length; l++) {
-//                    if (bamboo[l].length() == 0) {
-//                        almostdone = almostdone + jobdone;
-//                    }
-//                }
 //                break;
 //            }
 //            listaplikow = file.listFiles();
@@ -24,7 +18,7 @@
 //            assert listaplikow != null;
 //            value = listaplikow[0];
 //            if (value.isFile() && tree == null) {
-//                tree = new File(srcDir);
+//                tree = new File(Data.assemblesrcDir());
 //            }
 //            x = i;
 //            if (!value.isFile()) {
@@ -34,9 +28,6 @@
 //                        if (bamboo[x + 1].length() != 0) {
 //                            if (!gotthis.contains(bamboo[x + 1].toString())) {
 //                                if (!(bamboo[x + 1] == null)) {
-//                                    jobdone = (float) (1.0 / bamboo.length);
-//                                    almostdone = almostdone + jobdone;
-//                                    System.out.println(almostdone);
 //                                    gotthis.add(bamboo[x + 1].toString());
 //                                    x++;
 //                                }
@@ -57,3 +48,5 @@
 //        }
 //    }
 //}
+//
+//

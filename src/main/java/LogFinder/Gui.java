@@ -1,8 +1,12 @@
 package LogFinder;
 
+import javax.imageio.ImageIO;
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
+import java.awt.image.BufferedImage;
+import java.io.IOException;
+import java.util.Objects;
 
 public class Gui extends JPanel {
 
@@ -25,60 +29,58 @@ public class Gui extends JPanel {
         jTextField4 = new JTextField();
         jTextField5 = new JTextField();
         jLabel1 = new JLabel();
+        jLabel4 = new JLabel();
         JLabel jLabel2 = new JLabel();
         JLabel jLabel3 = new JLabel();
         JLabel jLabel5 = new JLabel();
-        jButton1 = new JButton();
+        JButton jButton1 = new JButton();
         JLabel jLabel6 = new JLabel();
         JLabel jLabel7 = new JLabel();
 
-
-
         setLayout(null);
-
         jPanel1.setOpaque(false);
         jPanel1.setLayout(null);
+        jLabel6.setOpaque(true);
+        jLabel6.setLayout(null);
 
         jRadioButton1.setText("Do you want to copy found text ?");
         jRadioButton1.setOpaque(false);
         jRadioButton1.setForeground(new Color(255, 255, 255));
         jRadioButton1.addActionListener(this::jRadioButton1ActionPerformed);
         jPanel1.add(jRadioButton1);
-        jRadioButton1.setBounds(740, 260, 250, 23);
+        jRadioButton1.setBounds(740, 190, 250, 23);
         jRadioButton2.setText("Do you want to copy found files ?");
         jRadioButton2.setOpaque(false);
         jRadioButton2.setForeground(new Color(255, 255, 255));
         jRadioButton2.addActionListener(this::jRadioButton2ActionPerformed);
         jPanel1.add(jRadioButton2);
-        jRadioButton2.setBounds(740, 220, 250, 23);
+        jRadioButton2.setBounds(740, 150, 250, 23);
 
-        jTextField2.addActionListener(this::jTextField2ActionPerformed);
+
         jPanel1.add(jTextField2);
         jTextField2.setBounds(39, 205, 598, 45);
 
-        jTextField3.addActionListener(this::jTextField3ActionPerformed);
+
         jPanel1.add(jTextField3);
         jTextField3.setBounds(39, 300, 598, 45);
 
-        jTextField4.addActionListener(evt -> jTextField4ActionPerformed());
+
         jTextField4.setVisible(false);
 
-        jTextField5.addActionListener(evt -> jTextField5ActionPerformed());
+
         jPanel1.add(jTextField5);
         jTextField5.setBounds(39, 395, 598, 45);
         jButton1.addActionListener(evt -> jButton1ActionPerformed());
 
-
-
         jPanel1.add(jTextField4);
-        jTextField4.setBounds(800, 360, 74, 60);
+        jTextField4.setBounds(800, 250, 50, 40);
 
         jLabel1.setFont(new Font("Tahoma", Font.PLAIN, 14)); // NOI18N
         jLabel1.setForeground(new Color(255, 255, 255));
         jLabel1.setText("How many lines ?");
         jLabel1.setVisible(false);
         jPanel1.add(jLabel1);
-        jLabel1.setBounds(780, 320, 120, 29);
+        jLabel1.setBounds(780, 220, 120, 29);
 
         jLabel2.setFont(new Font("SansSerif", Font.PLAIN, 18)); // NOI18N
         jLabel2.setForeground(new Color(255, 255, 255));
@@ -91,6 +93,14 @@ public class Gui extends JPanel {
         jLabel3.setText("Set the destination location:");
         jPanel1.add(jLabel3);
         jLabel3.setBounds(40, 250, 281, 55);
+
+        jLabel4.setFont(new Font("SansSerif", Font.PLAIN, 12)); // NOI18N
+        jLabel4.setForeground(new Color(0,0,0));
+        jLabel4.setBackground(new Color(255,255,255));
+        jLabel4.setOpaque(true);
+        jPanel1.add(jLabel4);
+        jLabel4.setBounds(700,330,300,150);
+        jLabel4.setVisible(false);
 
         jLabel7.setFont(new Font("SansSerif", Font.PLAIN, 18)); // NOI18N
         jLabel7.setForeground(new Color(255, 255, 255));
@@ -110,37 +120,36 @@ public class Gui extends JPanel {
         jPanel1.add(jButton1);
         jButton1.setBounds(80, 530, 929, 67);
 
-        jLabel6.setIcon(new ImageIcon("C:\\Users\\ljjptq\\Downloads\\Space.jpg")); // NOI18N
-        jLabel6.setText("jLabel6");
+        jLabel6.setIcon(new ImageIcon(MyPanel())); // NOI18N
         jPanel1.add(jLabel6);
         jLabel6.setBounds(0, 0, 1120, 660);
 
         add(jPanel1);
-        jPanel1.setBounds(0, 1, 1130, 670);
+        jPanel1.setBounds(0, 0, 1130, 670);
 
-    }// </editor-fold>
 
+    }
+    private BufferedImage image;
+    public BufferedImage MyPanel() {
+        try {
+            image = ImageIO.read(Objects.requireNonNull(Gui.class.getResource("/Space.jpg")));
+        } catch (IOException ioe) {
+            ioe.printStackTrace();
+        }
+        return image;
+    }
 
 
     private void jButton1ActionPerformed(){
-        click = true;
         System.out.println("Klik");
-        jButton1.setEnabled(false);
-    }
-
-    private void jTextField5ActionPerformed(){
-
-    }
-    private void jTextField2ActionPerformed(ActionEvent evt) {
-        // TODO add your handling code here:
-    }
-
-    private void jTextField3ActionPerformed(ActionEvent evt) {
-        // TODO add your handling code here:
-    }
-
-    private void jTextField4ActionPerformed() {
-        // TODO add your handling code here:
+        if(Data.assembledest().isEmpty() || Data.assembleinputwords().isEmpty() || Data.assemblesrcDir().isEmpty()){
+            jLabel4.setText("One of the input values is empty");
+            jLabel4.setVisible(true);
+        }
+        else{
+            jLabel4.setVisible(false);
+            click = true;
+        }
     }
 
     private void jRadioButton2ActionPerformed(ActionEvent evt) {
@@ -168,14 +177,33 @@ public class Gui extends JPanel {
         return jTextField3.getText();
     }
     public static int getText4() {
-        return Integer.parseInt(jTextField4.getText());
+        try {
+            Integer.parseInt(jTextField4.getText());
+            return Integer.parseInt(jTextField4.getText());
+        }
+        catch (NumberFormatException e) {
+            if(!ProgramMainLoop.clear) {
+                jLabel4.setText("The number of lines should be an integer");
+                jLabel4.setVisible(true);
+            }
+        }
+        return 0;
+
     }
     public static String getText5(){
         return jTextField5.getText();
     }
+    public static void clearing(){
 
-    private JButton jButton1;
+            jTextField4.setText("");
+            jTextField2.setText("");
+            jTextField3.setText("");
+            jTextField5.setText("");
+
+    }
+
     private JLabel jLabel1;
+    private static JLabel jLabel4;
     private static JTextField jTextField2;
     private static JTextField jTextField3;
     private static JTextField jTextField4;
