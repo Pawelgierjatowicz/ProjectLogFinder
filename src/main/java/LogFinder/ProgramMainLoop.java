@@ -14,115 +14,32 @@ public class ProgramMainLoop {
         int i;
         int x;
         int l = 1;
-        File tree = null;
         int licznik = 0;
+        File tree = null;
         File file = new File(Data.assemblesrcDir());
-        File[] listaplikow = file.listFiles();
-        List<String> inputValues;
-        ArrayList<String> gotthis = new ArrayList<>(l);
-        inputValues = Arrays.asList(Data.assembleinputwords().split(" "));
-        File dest = new File(Data.assembledest());
         FileWriter fw = new FileWriter(Data.assembledest() + "\\" + "Found texts.txt");
-        while (CopyFile.window.isVisible()) {
+        File[] listaplikow = file.listFiles();
+        ArrayList<String> gotthis = new ArrayList<>(l);
+        File dest = new File(Data.assembledest());
+        List<String> inputValues = Arrays.asList(Data.assembleinputwords().split(" "));
+        while (AddFrame.window.isVisible()) {
             for (i = 0; i < Objects.requireNonNull(listaplikow).length; i++) {
-
                 File value = listaplikow[i];
-                while (!value.isFile()) {
-                    File[] bamboo = listaplikow;
-                    file = new File(value.toString());
-
-                    if (Objects.requireNonNull(file.listFiles()).length == 0) {
-                        break;
-                    }
-                    listaplikow = file.listFiles();
-
-                    assert listaplikow != null;
-                    value = listaplikow[0];
-                    if (value.isFile() && tree == null) {
-                        tree = new File(Data.assemblesrcDir());
-                    }
-                    x = i;
-                    if (!value.isFile()) {
-                        if (i != listaplikow.length) {
-                            while (x != bamboo.length - 1) {
-                                assert bamboo[x + 1] != null;
-                                if (bamboo[x + 1].length() != 0) {
-                                    if (!gotthis.contains(bamboo[x + 1].toString())) {
-                                        if (!(bamboo[x + 1] == null)) {
-                                            l++;
-                                            gotthis.add(bamboo[x + 1].toString());
-                                            x++;
-                                        }
-                                    } else {
-                                        break;
-                                    }
-                                } else {
-                                    x++;
-                                }
-                            }
-                        }
-                        i = 0;
-                        tree = new File(file.toString());
-                    }
-                    if (value.isFile()) {
-                        break;
-                    }
-                }
-
+                tree = CheckIfFile.Check(value,listaplikow,tree,i,l,gotthis);
                 File[] listofFiles = file.listFiles();
                 assert listofFiles != null;
-
-                for (int v = 0, listofFilesLength = listofFiles.length; v < listofFilesLength; v++) {
-                    File listofFile = listofFiles[v];
-                    if (listofFile.isFile()) {
-                        File source = new File(file + "\\" + listofFile.getName());
-                        FileInputStream fstream = new FileInputStream(file + "\\" + listofFile.getName());
-                        BufferedReader br = new BufferedReader(new InputStreamReader(fstream));
-                        String strLine;
-                        if (v != i) {
-                            i = v;
-                        }
-                        while ((strLine = br.readLine()) != null && value.canRead()) {
-                            for (String inputValue : inputValues) {
-                                if (CopyFile.GUI.Showtext) {
-                                    if (strLine.contains(inputValue) || (licznik != 0 && licznik != Gui.getText4())) {
-                                        fw.write(strLine);
-                                        fw.write("\r\n");
-                                        licznik++;
-
-                                        if (licznik == Gui.getText4()) {
-                                            break;
-                                        }
-                                    }
-                                }
-                                if (CopyFile.GUI.CopyFile) {
-                                    if (strLine.contains(inputValue)) {
-                                        try {
-                                            FileUtils.copyFileToDirectory(source, dest);
-                                            break;
-                                        } catch (IOException e) {
-                                            e.printStackTrace();
-                                        }
-                                    }
-                                }
-                            }
-                        }
-                        licznik = 0;
-                        br.close();
-                    }
-                }
+                LoadFile.Loading(value, licznik, file, listofFiles, dest,fw , inputValues, i);
                 if (!(tree == null)) {
                     file = new File(tree.toString());
                     listaplikow = file.listFiles();
                 }
                 if (!gotthis.isEmpty() && i == Objects.requireNonNull(listaplikow).length - 1) {
-
                     i = -1;
                     file = new File(gotthis.get(gotthis.size() - 1));
                     System.out.println(gotthis);
                     gotthis.remove(gotthis.size() - 1);
                     listaplikow = file.listFiles();
-                    while (Objects.requireNonNull(listaplikow).length - 1 == 0) {
+                    while ((Objects.requireNonNull(listaplikow).length == 0)&&!gotthis.isEmpty()) {
                         file = new File(gotthis.get(gotthis.size() - 1));
                         gotthis.remove(gotthis.size() - 1);
                         listaplikow = file.listFiles();
