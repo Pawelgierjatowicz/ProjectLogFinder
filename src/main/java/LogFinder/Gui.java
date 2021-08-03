@@ -19,6 +19,7 @@ public class Gui extends JPanel {
     static boolean click = false;
     boolean Showtext = false;
     boolean CopyFile = false;
+
     private void initComponents() {
 
         JPanel jPanel1 = new JPanel();
@@ -33,7 +34,7 @@ public class Gui extends JPanel {
         JLabel jLabel2 = new JLabel();
         JLabel jLabel3 = new JLabel();
         JLabel jLabel5 = new JLabel();
-        JButton jButton1 = new JButton();
+        jButton1 = new JButton();
         JLabel jLabel6 = new JLabel();
         JLabel jLabel7 = new JLabel();
 
@@ -145,10 +146,12 @@ public class Gui extends JPanel {
         if(Data.assembledest().isEmpty() || Data.assembleinputwords().isEmpty() || Data.assemblesrcDir().isEmpty()){
             jLabel4.setText("One of the input values is empty");
             jLabel4.setVisible(true);
+            jButton1.setPressedIcon(jButton1.getDisabledSelectedIcon());
         }
         else{
             jLabel4.setVisible(false);
             click = true;
+
         }
     }
 
@@ -194,16 +197,15 @@ public class Gui extends JPanel {
         return jTextField5.getText();
     }
     public static void clearing(){
-
             jTextField4.setText("");
             jTextField2.setText("");
             jTextField3.setText("");
             jTextField5.setText("");
-
     }
 
     private JLabel jLabel1;
     private static JLabel jLabel4;
+    private static JButton jButton1;
     private static JTextField jTextField2;
     private static JTextField jTextField3;
     private static JTextField jTextField4;

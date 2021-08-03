@@ -2,13 +2,15 @@ package LogFinder;
 
 import java.io.File;
 import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
 import java.util.Objects;
 
 public class CheckIfFile {
-    public static File Check(File value, File[] listaplikow, File tree, int i, int l, ArrayList<String> gotthis) {
+    public static List<File> Check(File value, File[] listaplikow, File tree, File file, int i, int l, ArrayList<String> gotthis) {
         while (!value.isFile()) {
             File[] bamboo = listaplikow;
-            File file = new File(value.toString());
+            file = new File(value.toString());
             if (Objects.requireNonNull(file.listFiles()).length == 0) {
                 break;
             }
@@ -18,6 +20,7 @@ public class CheckIfFile {
             value = listaplikow[0];
             if (value.isFile() && tree == null) {
                 tree = new File(Data.assemblesrcDir());
+                System.out.println(Data.assemblesrcDir());
             }
             int x = i;
             if (!value.isFile()) {
@@ -40,13 +43,9 @@ public class CheckIfFile {
                         }
                     }
                 }
-
                 tree = new File(file.toString());
             }
-            if (value.isFile()) {
-                break;
-            }
         }
-        return tree;
+        return Arrays.asList(value, file, tree);
     }
 }

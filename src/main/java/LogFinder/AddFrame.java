@@ -11,7 +11,6 @@ public class AddFrame {
         window.add(Data.getGUI());
         window.setVisible(true);
         window.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        Loop.LoopUntillPressed();
         ProgramMainLoop.MainLoop();
     }
 }
