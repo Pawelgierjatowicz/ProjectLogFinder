@@ -31,13 +31,13 @@ public class Gui extends JPanel {
         jTextField5 = new JTextField();
         jLabel1 = new JLabel();
         jLabel4 = new JLabel();
+        pbar = new JProgressBar();
         JLabel jLabel2 = new JLabel();
         JLabel jLabel3 = new JLabel();
         JLabel jLabel5 = new JLabel();
         jButton1 = new JButton();
         JLabel jLabel6 = new JLabel();
         JLabel jLabel7 = new JLabel();
-
         setLayout(null);
         jPanel1.setOpaque(false);
         jPanel1.setLayout(null);
@@ -115,6 +115,16 @@ public class Gui extends JPanel {
         jLabel5.setText("LogFinder");
         jPanel1.add(jLabel5);
         jLabel5.setBounds(330, 10, 440, 130);
+
+        int MY_MINIMUM = 0;
+        int MY_MAXIMUM = Progress.progress();
+        System.out.println(MY_MAXIMUM);
+        pbar.setMinimum(0);
+        pbar.setMaximum(10000);
+        pbar.setBounds(80,610,929,50);
+        pbar.setVisible(true);
+        pbar.setOpaque(true);
+        jPanel1.add(pbar);
 
         jButton1.setFont(new Font("SansSerif", Font.PLAIN, 18)); // NOI18N
         jButton1.setText("Search");
@@ -205,6 +215,7 @@ public class Gui extends JPanel {
 
     private JLabel jLabel1;
     private static JLabel jLabel4;
+    public static JProgressBar pbar;
     private static JButton jButton1;
     private static JTextField jTextField2;
     private static JTextField jTextField3;

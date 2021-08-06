@@ -1,19 +1,26 @@
 package LogFinder;
 
 import java.io.*;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Objects;
+import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 public class ProgramMainLoop {
     static boolean clear;
     static boolean finish;
     CheckIfFile check = new CheckIfFile();
+
     public static void MainLoop() throws IOException {
         while (AddFrame.window.isVisible()) {
             Loop.LoopUntillPressed();
             if (Gui.click) {
+
                 int i;
                 finish = false;
                 int l = 1;
@@ -23,7 +30,10 @@ public class ProgramMainLoop {
                 FileWriter fw = new FileWriter(Data.assembledest() + "\\" + "Found texts.txt");
                 File[] listaplikow = file.listFiles();
                 ArrayList<String> gotthis = new ArrayList<>(l);
+                File[] progresslist = file.listFiles();
+                System.out.println(Arrays.toString(progresslist));
                 File dest = new File(Data.assembledest());
+                Progress.progress();
                 List<String> inputValues = Arrays.asList(Data.assembleinputwords().split(" "));
                 for (i = 0; i < Objects.requireNonNull(listaplikow).length; i++) {
                     File value = listaplikow[i];
