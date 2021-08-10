@@ -8,9 +8,9 @@ public class LoadFile {
     public static void Loading(File value, int licznik, File file, File[] listofFiles, File dest, FileWriter fw, List<String> inputValues, int i) throws IOException {
         for (int v = 0, listofFilesLength = listofFiles.length; v < listofFilesLength; v++) {
             File listofFile = listofFiles[v];
+            value = listofFile;
             if (listofFile.isFile()) {
                 Progress.Resultlist.remove(listofFile.toString());
-//                Data.GUI.updateBar(ProgramMainLoop.progresslength - ProgramMainLoop.Resultlist.size());
                 Gui.pbar.setValue(Progress.progresslength - Progress.Resultlist.size());
                 System.out.println(Progress.Resultlist.size());
 
@@ -20,7 +20,8 @@ public class LoadFile {
                 if ((v != i) && listofFilesLength > 1) {
                     i = v;
                 }
-                CopyValue.GetValue(value, licznik, inputValues, source, dest, br, fw);
+                CopyValue.GetValue(value, licznik, inputValues, source, dest, fw);
+                licznik = 0;
                 br.close();
             }
         }

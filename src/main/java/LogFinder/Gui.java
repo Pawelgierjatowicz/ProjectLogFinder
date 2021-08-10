@@ -116,12 +116,8 @@ public class Gui extends JPanel {
         jPanel1.add(jLabel5);
         jLabel5.setBounds(330, 10, 440, 130);
 
-        int MY_MINIMUM = 0;
-        int MY_MAXIMUM = Progress.progress();
-        System.out.println(MY_MAXIMUM);
         pbar.setMinimum(0);
-        pbar.setMaximum(10000);
-        pbar.setBounds(80,610,929,50);
+        pbar.setBounds(80,590,929,30);
         pbar.setVisible(true);
         pbar.setOpaque(true);
         jPanel1.add(pbar);
@@ -129,7 +125,7 @@ public class Gui extends JPanel {
         jButton1.setFont(new Font("SansSerif", Font.PLAIN, 18)); // NOI18N
         jButton1.setText("Search");
         jPanel1.add(jButton1);
-        jButton1.setBounds(80, 530, 929, 67);
+        jButton1.setBounds(80, 500, 929, 67);
 
         jLabel6.setIcon(new ImageIcon(MyPanel())); // NOI18N
         jPanel1.add(jLabel6);
@@ -195,10 +191,8 @@ public class Gui extends JPanel {
             return Integer.parseInt(jTextField4.getText());
         }
         catch (NumberFormatException e) {
-            if(!ProgramMainLoop.clear) {
                 jLabel4.setText("The number of lines should be an integer");
                 jLabel4.setVisible(true);
-            }
         }
         return 0;
 
@@ -211,6 +205,7 @@ public class Gui extends JPanel {
             jTextField2.setText("");
             jTextField3.setText("");
             jTextField5.setText("");
+            pbar.setMaximum(0);
     }
 
     private JLabel jLabel1;

@@ -12,15 +12,13 @@ import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
 public class ProgramMainLoop {
-    static boolean clear;
     static boolean finish;
-    CheckIfFile check = new CheckIfFile();
 
     public static void MainLoop() throws IOException {
         while (AddFrame.window.isVisible()) {
             Loop.LoopUntillPressed();
             if (Gui.click) {
-
+                Gui.pbar.setMaximum(Progress.progress());
                 int i;
                 finish = false;
                 int l = 1;
@@ -33,7 +31,6 @@ public class ProgramMainLoop {
                 File[] progresslist = file.listFiles();
                 System.out.println(Arrays.toString(progresslist));
                 File dest = new File(Data.assembledest());
-                Progress.progress();
                 List<String> inputValues = Arrays.asList(Data.assembleinputwords().split(" "));
                 for (i = 0; i < Objects.requireNonNull(listaplikow).length; i++) {
                     File value = listaplikow[i];
@@ -60,6 +57,9 @@ public class ProgramMainLoop {
                             listaplikow = file.listFiles();
                         }
                         tree = new File(file.toString());
+                    }
+                    if(Progress.Resultlist.isEmpty()){
+                        break;
                     }
                 }
                 Gui.clearing();
