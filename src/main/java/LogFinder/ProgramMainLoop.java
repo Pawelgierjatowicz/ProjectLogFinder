@@ -1,15 +1,10 @@
 package LogFinder;
 
 import java.io.*;
-import java.nio.file.Files;
-import java.nio.file.Path;
-import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Objects;
-import java.util.stream.Collectors;
-import java.util.stream.Stream;
 
 public class ProgramMainLoop {
     static boolean finish;
@@ -31,7 +26,7 @@ public class ProgramMainLoop {
                 File[] progresslist = file.listFiles();
                 System.out.println(Arrays.toString(progresslist));
                 File dest = new File(Data.assembledest());
-                List<String> inputValues = Arrays.asList(Data.assembleinputwords().split(" "));
+                ArrayList<String> inputValues = new ArrayList<>(Arrays.asList(Data.assembleinputwords().split(" ")));
                 for (i = 0; i < Objects.requireNonNull(listaplikow).length; i++) {
                     File value = listaplikow[i];
                     List<File> Files = CheckIfFile.Check(value,listaplikow,tree,file,i,l,gotthis);
@@ -41,6 +36,9 @@ public class ProgramMainLoop {
                     File[] listofFiles = file.listFiles();
                     assert listofFiles != null;
                     LoadFile.Loading(value, licznik, file, listofFiles, dest, fw, inputValues, i);
+                    if(Copynew.finishnow){
+                        break;
+                    }
                     if (!(tree == null)) {
                         file = new File(tree.toString());
                         listaplikow = file.listFiles();
@@ -65,6 +63,7 @@ public class ProgramMainLoop {
                 Gui.clearing();
                 finish = true;
                 Gui.click = false;
+                Copynew.finishnow = false;
                 fw.close();
             }
         }
