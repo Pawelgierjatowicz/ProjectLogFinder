@@ -13,8 +13,10 @@ public class Progress {
     static int progresslength;
     public static int progress(){
         try (Stream<Path> walk = Files.walk(Paths.get(Data.assemblesrcDir()))) {
+            Gui.Addloadingscreen();
             Resultlist = walk.filter(Files::isRegularFile)
                     .map(Path::toString).collect(Collectors.toList());
+            Gui.Deleteloadingscreen();
         } catch (IOException e) {
             e.printStackTrace();
         }

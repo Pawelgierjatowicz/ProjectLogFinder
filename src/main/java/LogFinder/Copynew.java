@@ -13,7 +13,7 @@ import java.util.List;
 
 public class Copynew {
     public static boolean finishnow = false;
-    private static final int MAP_SIZE = 104857600; // 5 MB in bytes
+    private static final int MAP_SIZE = 1048576000; //1000 Megabytes
     public static void countOccurrences (Path path, ArrayList<String> inputValues, FileWriter fw, int licznik, File source, File dest )
     throws IOException {
         int padding = 1;
@@ -23,9 +23,7 @@ public class Copynew {
         List<byte[]> list = new ArrayList<>();
         byte[] tosearch;
         boolean inword = false;
-        boolean begginingofline = false;
         boolean scantolineend = false;
-
 
         ByteArrayOutputStream baos = new ByteArrayOutputStream();
         DataOutputStream out = new DataOutputStream(baos);
@@ -40,7 +38,6 @@ public class Copynew {
             }
             try (FileChannel channel = FileChannel.open(path, StandardOpenOption.READ)) {
 
-
                 final long length = channel.size();
                 int pos = 0;
                 outerloop:
@@ -52,15 +49,11 @@ public class Copynew {
                     MappedByteBuffer buffer = channel.map(FileChannel.MapMode.READ_ONLY, pos, tomap);
                     pos += (trymap == tomap) ? MAP_SIZE : tomap;
                     for (int i = 0; i < limit; i++) {
-                        if(finishnow){
-                            break;
-                        }
                         byte b = buffer.get(i);
                         if (scantolineend) {
                             if (b == '\n') {
                                 scantolineend = false;
                                 inword = false;
-
                             }
                         } else if (b == '\n') {
                             inword = false;
@@ -71,30 +64,25 @@ public class Copynew {
                                 if (Data.getGUI().CopyFile) {
                                     try {
                                         FileUtils.copyFileToDirectory(source, dest);
+                                        if(finishnow){
+                                            break;
+                                        }
                                         if (!Data.getGUI().Showtext) {
-
                                             break outerloop;
                                         }
                                     } catch (IOException e) {
                                         e.printStackTrace();
                                     }
                                 }
-
                                 if (Data.getGUI().Showtext || licznik!=0 || licznik2!=0) {
                                     while(licznik!=Gui.getText4()) {
-                                        while (!begginingofline) {
-                                        i --;
                                         if(i == 0){
-                                            begginingofline = true;
                                             break;
                                         }
-                                        b = buffer.get(i);
-                                        if(b == '\n'){
-                                            begginingofline = true;
-                                            i ++;
-                                            break;
-                                            }
-                                        }
+//                                        b = buffer.get(i);
+//                                        if(b == '\n'){
+//                                            i ++;
+//                                            }
                                         b = buffer.get(i);
                                         fw.write(buffer.get(i));
                                         i++;
@@ -105,7 +93,6 @@ public class Copynew {
                                         }
                                     }
                                     if (licznik == Gui.getText4()) {
-                                        begginingofline = false;
                                         break outerloop;
                                     }
                                 }
@@ -119,7 +106,6 @@ public class Copynew {
                 }
             }
         }
-
 
     private static boolean wordMatch(MappedByteBuffer buffer, int pos, int tomap, List<byte[]> list, byte b,ArrayList<String> inputValues) {
         int counter = 0;
@@ -137,7 +123,6 @@ public class Copynew {
                 }
                 b = buffer.get(pos + i);
                 foundjustonce = false;
-
                 for (int j = 0; j < list.size(); j++) {
                     byte[] bytes = list.get(j);
                     if (bytes[v] == b) {
@@ -150,8 +135,12 @@ public class Copynew {
                             b = buffer.get(pos + i);
                             counter ++;
                             if (counter == bytes.length) {
-                                inputValues.remove(j);
+                                if(!Data.getGUI().Showtext) {
+                                    list.remove(j);
+                                    inputValues.remove(j);
+                                }
                                 if(inputValues.isEmpty()){
+                                    found = true;
                                     finishnow = true;
                                     break outerer;
                                 }
@@ -169,7 +158,6 @@ public class Copynew {
                         }
                     }
                 }
-
             if(foundjustonce){
                 i ++;
             }
@@ -177,7 +165,6 @@ public class Copynew {
         }
         return found;
     }
-
 }
 
 

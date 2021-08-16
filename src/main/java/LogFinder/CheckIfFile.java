@@ -20,7 +20,7 @@ public class CheckIfFile {
             value = listaplikow[0];
             if (value.isFile() && tree == null) {
                 tree = new File(Data.assemblesrcDir());
-                System.out.println(Data.assemblesrcDir());
+
             }
             int x = i;
             if (!value.isFile()) {

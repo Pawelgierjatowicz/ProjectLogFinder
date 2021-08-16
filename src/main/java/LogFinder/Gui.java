@@ -2,6 +2,7 @@ package LogFinder;
 
 import javax.imageio.ImageIO;
 import javax.swing.*;
+import javax.swing.event.ChangeEvent;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.image.BufferedImage;
@@ -19,16 +20,17 @@ public class Gui extends JPanel {
     static boolean click = false;
     boolean Showtext = false;
     boolean CopyFile = false;
+    static boolean Startloading = true;
 
     private void initComponents() {
 
         JPanel jPanel1 = new JPanel();
-        JRadioButton jRadioButton1 = new JRadioButton();
-        JRadioButton jRadioButton2 = new JRadioButton();
         jTextField2 = new JTextField();
         jTextField3 = new JTextField();
         jTextField4 = new JTextField();
         jTextField5 = new JTextField();
+        jRadioButton1 = new JRadioButton();
+        jRadioButton2 = new JRadioButton();
         jLabel1 = new JLabel();
         jLabel4 = new JLabel();
         pbar = new JProgressBar();
@@ -48,13 +50,12 @@ public class Gui extends JPanel {
         jRadioButton1.setOpaque(false);
         jRadioButton1.setForeground(new Color(255, 255, 255));
         jRadioButton1.addActionListener(this::jRadioButton1ActionPerformed);
-        jPanel1.add(jRadioButton1);
+
         jRadioButton1.setBounds(740, 190, 250, 23);
         jRadioButton2.setText("Do you want to copy found files ?");
         jRadioButton2.setOpaque(false);
         jRadioButton2.setForeground(new Color(255, 255, 255));
         jRadioButton2.addActionListener(this::jRadioButton2ActionPerformed);
-        jPanel1.add(jRadioButton2);
         jRadioButton2.setBounds(740, 150, 250, 23);
 
 
@@ -105,7 +106,7 @@ public class Gui extends JPanel {
 
         jLabel7.setFont(new Font("SansSerif", Font.PLAIN, 18)); // NOI18N
         jLabel7.setForeground(new Color(255, 255, 255));
-        jLabel7.setText("What words should the file contain");
+        jLabel7.setText("Which words should the file contain");
         jPanel1.add(jLabel7);
         jLabel7.setBounds(40, 345, 395, 60);
 
@@ -126,15 +127,22 @@ public class Gui extends JPanel {
         jButton1.setText("Search");
         jPanel1.add(jButton1);
         jButton1.setBounds(80, 500, 929, 67);
-
+        ButtonGroup bg = new ButtonGroup();
+        jPanel1.add(jRadioButton1);
+        bg.add(jRadioButton1);
+        jPanel1.add(jRadioButton2);
+        bg.add(jRadioButton2);
         jLabel6.setIcon(new ImageIcon(MyPanel())); // NOI18N
         jPanel1.add(jLabel6);
         jLabel6.setBounds(0, 0, 1120, 660);
-
         add(jPanel1);
         jPanel1.setBounds(0, 0, 1130, 670);
 
+    }
 
+    public static Icon Loading() {
+
+        return new ImageIcon(Objects.requireNonNull(Gui.class.getResource("/ajax-loader.gif")));
     }
     private BufferedImage image;
     public BufferedImage MyPanel() {
@@ -145,10 +153,26 @@ public class Gui extends JPanel {
         }
         return image;
     }
+    public static void Addloadingscreen(){
+        if(Startloading) {
+            jLabel4.setIcon(Loading());
+            jLabel4.setHorizontalAlignment(JLabel.CENTER);
+            jLabel4.setVisible(true);
+            jLabel4.setText("Please wait while files are being counted");
+            Startloading = !Startloading;
+        }
+    }
+    public static void Deleteloadingscreen(){
+        if(!Startloading){
+            jLabel4.setVisible(false);
+            jLabel4.setIcon(null);
+            jLabel4.setText("");
+            Startloading = !Startloading;
+        }
+    }
 
 
     private void jButton1ActionPerformed(){
-        System.out.println("Klik");
         if(Data.assembledest().isEmpty() || Data.assembleinputwords().isEmpty() || Data.assemblesrcDir().isEmpty()){
             jLabel4.setText("One of the input values is empty");
             jLabel4.setVisible(true);
@@ -162,23 +186,32 @@ public class Gui extends JPanel {
     }
 
     private void jRadioButton2ActionPerformed(ActionEvent evt) {
-        CopyFile = !CopyFile;
-    }
 
-    private void jRadioButton1ActionPerformed(ActionEvent evt) {
-        Showtext = !Showtext;
-        showing();
-    }
-    public void showing(){
-        if(Showtext){
-            jTextField4.setVisible(true);
-            jLabel1.setVisible(true);
+        if(jRadioButton2.isSelected()){
+            CopyFile = true;
         }
-        else{
+        jRadioButton1.setSelected(false);
+        if(!jRadioButton1.isSelected()){
+            Showtext = false;
             jTextField4.setVisible(false);
             jLabel1.setVisible(false);
         }
     }
+
+    private void jRadioButton1ActionPerformed(ActionEvent evt) {
+        if(jRadioButton1.isSelected()){
+            Showtext = true;
+        }
+        jRadioButton2.setSelected(false);
+        if(!jRadioButton2.isSelected()){
+            CopyFile = false;
+        }
+        if(Showtext){
+            jTextField4.setVisible(true);
+            jLabel1.setVisible(true);
+        }
+    }
+
     public static String getText2(){
         return jTextField2.getText();
     }
@@ -186,13 +219,15 @@ public class Gui extends JPanel {
         return jTextField3.getText();
     }
     public static int getText4() {
+        if(jRadioButton1.isSelected()){
         try {
             Integer.parseInt(jTextField4.getText());
             return Integer.parseInt(jTextField4.getText());
         }
         catch (NumberFormatException e) {
-                jLabel4.setText("The number of lines should be an integer");
-                jLabel4.setVisible(true);
+            jLabel4.setText("The number of lines should be an integer");
+            jLabel4.setVisible(true);
+            }
         }
         return 0;
 
@@ -209,12 +244,15 @@ public class Gui extends JPanel {
     }
 
     private JLabel jLabel1;
-    private static JLabel jLabel4;
+    public static JLabel jLabel4;
     public static JProgressBar pbar;
     private static JButton jButton1;
     private static JTextField jTextField2;
     private static JTextField jTextField3;
     private static JTextField jTextField4;
     private static JTextField jTextField5;
+    private static JRadioButton jRadioButton1;
+    private static JRadioButton jRadioButton2;
+
     // End of variables declaration
 }

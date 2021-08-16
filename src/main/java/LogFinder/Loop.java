@@ -1,9 +1,10 @@
 package LogFinder;
 
 public class Loop {
-    public static void LoopUntillPressed (){
-        while(!Gui.click){
-            System.out.println("Nothing");
+    public static void LoopUntillPressed() {
+        do{
+            System.out.println();
+        } while(!(Gui.click));
         }
     }
-}
+
