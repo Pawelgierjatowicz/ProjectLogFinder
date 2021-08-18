@@ -2,7 +2,6 @@ package LogFinder;
 
 import javax.imageio.ImageIO;
 import javax.swing.*;
-import javax.swing.event.ChangeEvent;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.image.BufferedImage;
@@ -11,9 +10,6 @@ import java.util.Objects;
 
 public class Gui extends JPanel {
 
-    /**
-     * Creates new form LogFind
-     */
     public Gui() {
         initComponents();
     }
@@ -254,5 +250,4 @@ public class Gui extends JPanel {
     private static JRadioButton jRadioButton1;
     private static JRadioButton jRadioButton2;
 
-    // End of variables declaration
 }

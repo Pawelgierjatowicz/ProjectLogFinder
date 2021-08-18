@@ -57,7 +57,7 @@ public class ProgramMainLoop {
                     File[] listofFiles = file.listFiles();
                     assert listofFiles != null;
                     i = LoadFile.Loading(licznik, file, listofFiles, dest, fw, inputValues, i);
-                    if(Copynew.finishnow){
+                    if(Copyvalue.finishnow){
                         break;
                     }
                     if (!(tree == null)) {
@@ -91,7 +91,7 @@ public class ProgramMainLoop {
             Gui.clearing();
             finish = true;
             Gui.click = false;
-            Copynew.finishnow = false;
+            Copyvalue.finishnow = false;
         }
     }
 }

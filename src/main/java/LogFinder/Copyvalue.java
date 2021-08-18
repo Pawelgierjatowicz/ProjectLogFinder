@@ -11,7 +11,7 @@ import java.nio.file.StandardOpenOption;
 import java.util.ArrayList;
 import java.util.List;
 
-public class Copynew {
+public class Copyvalue {
     public static boolean finishnow = false;
     private static final int MAP_SIZE = 1048576000; //1000 Megabytes
     public static void countOccurrences (Path path, ArrayList<String> inputValues, FileWriter fw, int licznik, File source, File dest )
@@ -79,10 +79,6 @@ public class Copynew {
                                         if(i == 0){
                                             break;
                                         }
-//                                        b = buffer.get(i);
-//                                        if(b == '\n'){
-//                                            i ++;
-//                                            }
                                         b = buffer.get(i);
                                         fw.write(buffer.get(i));
                                         i++;

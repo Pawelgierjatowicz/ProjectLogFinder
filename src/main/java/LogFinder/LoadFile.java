@@ -19,8 +19,8 @@ public class LoadFile {
                 if ((v != i) && listofFilesLength > 1) {
                     i = v;
                 }
-                Copynew.countOccurrences(path,inputValues,fw,licznik,source,dest);
-                if(Copynew.finishnow){
+                Copyvalue.countOccurrences(path,inputValues,fw,licznik,source,dest);
+                if(Copyvalue.finishnow){
                     break;
                 }
                 licznik = 0;
